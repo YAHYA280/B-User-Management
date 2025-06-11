@@ -1,0 +1,50 @@
+name: brainboost
+services:
+
+  keycloak_bitnami:
+    image: docker.io/bitnami/keycloak:latest
+    ports:
+      - "7071:7071"
+    environment:
+      - KEYCLOAK_CREATE_ADMIN_USER=false
+      - KEYCLOAK_ADMIN_USER=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KEYCLOAK_EXTRA_ARGS= --import-realm
+      - KEYCLOAK_ENABLE_SCRIPT_UPLOADS=true
+      - KC_HTTP_RELATIVE_PATH=/auth
+      #- KEYCLOAK_IMPORT=/tmp/realm-config.json
+    depends_on:
+      - postgresql
+    volumes:
+      - ./src/main/resources/realm/bitnami:/opt/bitnami/keycloak/data/import
+      #volumes:
+      #- /Users/useraccount/Downloads/realm.json:/opt/bitnami/keycloak/data/import/realm.json # Mount the directory containing realm.json
+    networks:
+      - brainboost_network
+
+
+  postgresql:
+    image: docker.io/bitnami/postgresql:latest
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - POSTGRESQL_USERNAME=bn_keycloak
+      - POSTGRESQL_DATABASE=bitnami_keycloak
+
+      - POSTGRES_DB=brainboost
+    #      - POSTGRES_USER=postgres
+    #      - POSTGRES_PASSWORD=root
+
+    ports:
+      - "5432:5432"
+    #volumes:
+    #  - 'postgresql_data:/bitnami/postgresql'
+    networks:
+      - brainboost_network
+
+volumes:
+  postgresql_data:
+    driver: local
+
+networks:
+  brainboost_network:
+    driver: bridge

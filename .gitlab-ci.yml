@@ -1,0 +1,55 @@
+include:
+  - project: 'marketing-confort/template-ci'
+    ref: main
+    file: 'maven.yml'
+  - project: 'marketing-confort/template-ci'
+    ref: main
+    file: 'build-publish-docker-mvn.yml'
+  - project: 'marketing-confort/template-ci'
+    ref: main
+    file: 'update-project-version.yml'
+  - project: 'marketing-confort/template-ci'
+    ref: main
+    file: 'validate-changes.yml'
+  - project: 'marketing-confort/template-ci'
+    ref: main
+    file: 'default-variables.yml'
+
+stages:
+  - validate-changes
+  - test
+  - build
+  - update-project-version
+
+
+variables:
+  APP_NAME: usermanagementservice/spring-boot-app
+
+validate-changes:
+  extends: .validate_changes_template
+  only:
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
+
+test:
+  extends: .test_template
+  only:
+    refs:
+      - merge_requests
+    variables:
+      - $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "develop"
+  
+
+build-and-publish:
+  extends: .build_template
+  only:
+    - staging
+  before_script:
+    - if [ ! -f "$VERSION_FILE" ]; then echo "1.0.0" > "$VERSION_FILE"; fi
+
+update-project-version:
+  extends: .update_project_version_template
+  only:
+    - staging

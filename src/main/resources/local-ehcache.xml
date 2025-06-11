@@ -1,0 +1,40 @@
+<ehcache>
+    <diskStore path="java.io.tmpdir"/>
+
+    <cache name="s3UrlCache"
+           maxEntriesLocalHeap="1000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           timeToLiveSeconds="100"
+           timeToIdleSeconds="300"
+           memoryStoreEvictionPolicy="LFU"
+           statistics="true">
+    </cache>
+    <cache name="listAndSearchFilesCache"
+           maxEntriesLocalHeap="1000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"
+           memoryStoreEvictionPolicy="LFU"
+           statistics="true">
+    </cache>
+    <cache name="filesMetadataCache"
+           maxEntriesLocalHeap="1000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"
+           memoryStoreEvictionPolicy="LFU"
+           statistics="true">
+    </cache>
+    <cache name="listFilesWithHierarchyCache"
+           maxEntriesLocalHeap="1000"
+           maxEntriesLocalDisk="1000"
+           eternal="false"
+           timeToLiveSeconds="600"
+           timeToIdleSeconds="300"
+           memoryStoreEvictionPolicy="LFU"
+           statistics="true">
+    </cache>
+</ehcache>

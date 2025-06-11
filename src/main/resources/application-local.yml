@@ -1,0 +1,89 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://195.35.24.133:5432/brainboost-user-management-service-local-db
+    username: brainboost-user-management-service-local-user
+    password: 0y^731Dhf
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        packagesToScan: com.marketingconfort.brainboost_common.usermanagement.models
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://keycloak-rec.mc-intern.com/auth/realms/brainboost-local
+  mail:
+    host: smtp.titan.email
+    port: 587
+    username: zahaira.jaada@marketingconfort.com
+    password: sgfG6zfc565*
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          ssl:
+            enabled: true
+          auth: true
+    default-encoding: UTF-8
+    support-mail: contact@marketingconfort.com
+
+# keycloak configuration :
+keycloak:
+  auth-server-url:  https://keycloak-rec.mc-intern.com/auth/
+  realm: brainboost-local
+  resource: brainboost-user-service
+#  ssl-required: external
+
+auth:
+  serverUrl:  https://keycloak-rec.mc-intern.com/auth/
+  realm: brainboost-local
+  clientId: brainboost-user-service
+  clientSecret: yqdGKaPiebzqphyqeFjVDZBaAhy5k77i
+  adminUsername: brainboost-local-admin
+  adminPassword: KrC6NYedwFgqnTXb
+
+aws:
+  credentials:
+    accessKey: AKIA3FLDZT77TMQIVIRB
+    secretKey: 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
+  bucketName: brainboost-test
+  bucketPolicy: classpath:bucketPolicy.json
+  preSignedUrlExpiration:
+    defaultTTL: 60
+  lifecycle:
+    documentsTTL: 4
+    imagesTTL: 2
+    videosTTL: 1
+  max-file-size:
+    images: 22MB
+    videos: 500MB
+    documents: 10MB
+    default-size: 5MB
+  expiration-action:
+    images: delete
+    videos: archive
+    documents: manual_review
+  allowedExtensions:
+    - jpg
+    - png
+    - mp4
+    - pdf
+    - docx
+  pagination:
+    pageSize: 2
+ehcache:
+  ehcacheFilePath: local-ehcache.xml
+content:
+  segment:
+    length: 2500
+
+rest-template-config-timeout-connect: 2000
+rest-template-config-timeout-read: 2000
+rest-template-config-timeout-headers-Authorization: "token"
+

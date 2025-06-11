@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: brainboost-user-management-service
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  main:
+    allow-bean-definition-overriding: true
+
+# ---- Server Configuration ----
+server:
+  port: 7071
+
+# ---- actuator configuration ----
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+  endpoints:
+    enabled-by-default: true
+    web:
+      exposure:
+        include: metrics, health, caches, restart
